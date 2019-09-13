@@ -3,15 +3,15 @@
     <div class="col-md-1 votes-answer">
       <ul>
         <li title="" data-original-title="This is useful.">
-          <%= link_to "#", class: "action vote vote-up img-circle" do %>
+          <%= link_to vote_path(answer), remote: true, method: :post, class: "action vote vote-up img-circle" do %>
             <i class="fa fa-chevron-up"></i>
           <% end %>
         </li>
         <li class="vote-count">
-          <span itemprop="upvoteCount" class="vote-count">0</span>
+          <span itemprop="upvoteCount" class="vote-count" id="total"><%= answer.votes.count %></span>
         </li>
         <li title="" data-original-title="This is not useful">
-          <%= link_to "#", class: "action vote vote-down img-circle" do %>
+          <%= link_to unvote_path(answer), remote: true, method: :delete, class: "action vote vote-down img-circle" do %>
             <i class="fa fa-chevron-down"></i>
           <% end %>
         </li>
@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="col-md-10">
-      <h6><%= link_to answer.user.name, answer.user %><i class="cr-answer">answer <%= time_ago_in_words(answer.created_at) %> ago</i>
+      <h6><%= link_to answer.user.name, answer.user %><i class="cr-answer">repply on question of "<%= @question.user.name %>" <%= time_ago_in_words(answer.created_at) %> ago </i> &uarr;
         <% if current_user?(answer.user) %>
           <div class="links btn-group-action">
             <%= link_to question_answer_path(answer.question, answer), method:

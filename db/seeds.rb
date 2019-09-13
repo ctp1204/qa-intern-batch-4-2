@@ -3,11 +3,10 @@
   Category.create!(name: name)
 end
 
-10.times do |n|
+5.times do |n|
   name  = Faker::Name.name
   Tag.create!(name: name)
 end
-
 
 #User fake-data
 User.create!(name:  "Admin",
@@ -34,11 +33,10 @@ User.create!(name:  "Admin",
               password_confirmation: "111111",)
 end
 
-
 #questions fake-data
 
-users = User.order(:created_at).take(6)
-10.times do
+users = User.order(:created_at).take(2)
+5.times do
   title = Faker::Lorem.question
   category_id = Category.first.id
   content = Faker::Lorem.sentence(5)

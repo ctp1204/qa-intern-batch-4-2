@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :logged_in_user
-  before_action :load_question, only: :create
+  before_action :load_question, only: [:create, :update]
   before_action :load_comment, only: [:edit, :update, :destroy]
 
   def create

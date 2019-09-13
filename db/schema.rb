@@ -94,6 +94,15 @@ ActiveRecord::Schema.define(version: 2019_09_11_013900) do
     t.datetime "reset_sent_at"
   end
 
+  create_table "votes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "answer_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["answer_id"], name: "index_votes_on_answer_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
+  end
+
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "questions"
@@ -102,4 +111,6 @@ ActiveRecord::Schema.define(version: 2019_09_11_013900) do
   add_foreign_key "question_tags", "tags"
   add_foreign_key "questions", "categories"
   add_foreign_key "questions", "users"
+  add_foreign_key "votes", "answers"
+  add_foreign_key "votes", "users"
 end

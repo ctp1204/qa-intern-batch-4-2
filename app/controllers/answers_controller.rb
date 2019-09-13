@@ -1,8 +1,9 @@
 class AnswersController < ApplicationController
   before_action :logged_in_user
-  before_action :load_question, expect: [:show, :new]
+  before_action :load_answer, only: [:edit, :update, :destroy, :vote, :unvote]
+  before_action :load_question, only: [:create, :update, :destroy]
   before_action :load_comment, only: [:create, :update, :destroy]
-  before_action :load_answer, only: [:edit, :update, :destroy]
+  before_action :load_vote, only: :unvote
 
   def index
     rows = @question.answers.newest.includes(:user)
@@ -41,6 +42,21 @@ class AnswersController < ApplicationController
     end
   end
 
+  def vote
+    return if @answer.voted current_user
+    @answer.votes.create user_id: current_user.id
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def unvote
+    @vote.destroy if @vote
+    respond_to do |format|
+      format.js
+    end
+  end
+
   private
 
   def answer_params
@@ -62,5 +78,9 @@ class AnswersController < ApplicationController
   def load_comment
     @comment = @question.comments.build
     @comments = @question.comments.newest.includes(:user)
+  end
+
+  def load_vote
+    @vote = @answer.votes.find_by user_id: current_user.id
   end
 end

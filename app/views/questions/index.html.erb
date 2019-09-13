@@ -1,4 +1,4 @@
-<% provide(:title, 'All questions') %>
+<% provide(:title, 'Your questions') %>
 <div class="col md-8">
   <nav>
     <ol class="breadcrumb">
@@ -11,5 +11,5 @@
     </ol>
   </nav>
   <%= render @questions %>
-  <%= will_paginate %>
+  <%= paginate @questions %>
 </div>
